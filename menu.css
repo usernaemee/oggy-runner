@@ -1,0 +1,321 @@
+/* ============================================
+   MENU CSS - Main menu styles
+   OggyRunner - css/menu.css
+   ============================================ */
+
+#menuScr {
+  background: linear-gradient(180deg, #1a1a3e 0%, #0a0a1a 100%);
+  justify-content: center;
+}
+
+/* ── Floating background shapes ── */
+.menu-bg-anim {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.04;
+  animation: bubbleFloat linear infinite;
+}
+
+@keyframes bubbleFloat {
+  0%   { transform: translateY(110vh) rotate(0deg) scale(1); }
+  50%  { transform: translateY(50vh)  rotate(180deg) scale(1.1); }
+  100% { transform: translateY(-150px) rotate(360deg) scale(1); }
+}
+
+/* ── Logo ── */
+.menu-logo {
+  z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+  margin-bottom: 8px;
+}
+
+.ml-oggy {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(42px, 12vw, 80px);
+  background: linear-gradient(45deg, #4A90D9, #64B5F6, #2196F3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 4px 12px rgba(74,144,217,0.5));
+  line-height: 1;
+  animation: titleFloat 4s ease-in-out infinite;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%       { transform: translateY(-6px) rotate(1deg); }
+}
+
+.ml-and {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(14px, 3vw, 20px);
+  color: rgba(255,255,255,0.5);
+  margin: 2px 0;
+}
+
+.ml-cock {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(18px, 5vw, 36px);
+  background: linear-gradient(45deg, #E91E63, #FF5722, #FF9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 3px 8px rgba(233,30,99,0.4));
+}
+
+.ml-tag {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(14px, 3vw, 22px);
+  color: var(--gold);
+  letter-spacing: 5px;
+  margin-top: 6px;
+  text-shadow: 0 2px 8px rgba(255,215,0,0.4);
+}
+
+/* ── Menu Buttons ── */
+.menu-btns {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(82%, 320px);
+  margin-top: 24px;
+}
+
+.btn {
+  padding: 13px 30px;
+  border: none;
+  border-radius: var(--br-full);
+  font-family: 'Fredoka One', cursive;
+  font-size: var(--fs-md);
+  cursor: pointer;
+  transition: var(--tr-fast);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine sweep */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg, transparent, rgba(255,255,255,0.18), transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.btn:hover::after { transform: translateX(100%); }
+.btn:active        { transform: scale(0.94); }
+
+.btn-play {
+  background: var(--grad-play);
+  color: #1a1a2e;
+  font-size: clamp(18px, 5vw, 26px);
+  padding: 15px 30px;
+  box-shadow: 0 6px 28px rgba(67,233,123,0.4);
+}
+
+.btn-icon {
+  margin-right: 4px;
+}
+
+.btn-chars {
+  background: var(--grad-char);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(102,126,234,0.35);
+}
+
+.btn-shop {
+  background: var(--grad-shop);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(240,147,251,0.3);
+}
+
+.btn-mission {
+  background: var(--grad-mission);
+  color: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(250,112,154,0.3);
+}
+
+.btn-settings {
+  background: var(--grad-sett);
+  color: #1a1a2e;
+  box-shadow: 0 4px 20px rgba(161,140,209,0.25);
+}
+
+/* ── Footer Stats ── */
+.menu-footer {
+  position: absolute;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: flex;
+  gap: 16px;
+  z-index: 2;
+}
+
+.mf-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--ui-border);
+  padding: 7px 14px;
+  border-radius: var(--br-full);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: #fff;
+}
+
+/* ── Shop screen ── */
+#shopScr {
+  background: linear-gradient(180deg, #1a1a3e, #16213e);
+}
+
+/* ── Settings screen ── */
+#settScr {
+  background: linear-gradient(180deg, #1a1a3e, #16213e);
+}
+
+.sett-list {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 480px;
+  padding: 12px 18px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sett-item {
+  background: var(--ui-card);
+  border-radius: var(--br-md);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--ui-border);
+}
+
+.sett-label {
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: #fff;
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: rgba(255,255,255,0.14);
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+
+.toggle.on { background: var(--jack-green); }
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.toggle.on::after { transform: translateX(22px); }
+
+/* Missions screen */
+#missionScr {
+  background: linear-gradient(180deg, #1a1a3e, #16213e);
+}
+
+.mission-list {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  padding: 10px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mission-card {
+  background: var(--ui-card);
+  border-radius: var(--br-md);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--ui-border);
+}
+
+.mission-card.done {
+  border-color: rgba(67,233,123,0.3);
+  background: rgba(67,233,123,0.06);
+}
+
+.mission-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--br-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.mission-info { flex: 1; min-width: 0; }
+
+.mission-title {
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  color: #fff;
+}
+
+.mission-desc {
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.45);
+  margin-top: 2px;
+}
+
+.mission-pbar {
+  width: 100%;
+  height: 5px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  margin-top: 7px;
+  overflow: hidden;
+}
+
+.mission-pfill {
+  height: 100%;
+  background: linear-gradient(90deg, #43e97b, #38f9d7);
+  border-radius: 3px;
+}
+
+.mission-reward {
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  color: var(--gold);
+  flex-shrink: 0;
+}
