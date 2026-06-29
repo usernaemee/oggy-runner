@@ -1,0 +1,182 @@
+/* ============================================
+   HUD CSS - In-game UI
+   OggyRunner - css/hud.css
+   ============================================ */
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.3s;
+}
+
+#hud.hud-hidden { display: none; }
+#hud.hud-visible { display: block; }
+
+/* ── Top bar ── */
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px;
+  padding-top: max(14px, env(safe-area-inset-top));
+}
+
+/* ── Left: score + coins ── */
+.hud-left { display: flex; flex-direction: column; gap: 5px; }
+
+.hud-score {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(22px, 6vw, 32px);
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  line-height: 1;
+}
+
+.hud-coins-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: var(--br-full);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: clamp(12px, 3vw, 16px);
+}
+
+/* ── Center: distance ── */
+.hud-center { display: flex; flex-direction: column; align-items: center; }
+
+.hud-dist {
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: var(--br-full);
+  color: rgba(255,255,255,0.65);
+  font-weight: 700;
+  font-size: clamp(11px, 2.5vw, 14px);
+}
+
+/* ── Right: pause + powerup ── */
+.hud-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: all;
+}
+
+.hud-pause-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--tr-fast);
+}
+
+.hud-pause-btn:active { transform: scale(0.9); }
+
+.hud-mult {
+  background: rgba(233,69,96,0.85);
+  padding: 3px 10px;
+  border-radius: var(--br-sm);
+  color: #fff;
+  font-weight: 800;
+  font-size: clamp(11px, 2.5vw, 14px);
+}
+
+.hud-pu-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  padding: 5px 10px;
+  border-radius: var(--br-full);
+}
+
+.hud-pu-track {
+  width: 48px;
+  height: 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.hud-pu-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* ── Gesture hint ── */
+.gesture-hint {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: ghFade 4s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes ghFade {
+  0%, 60% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+
+.gh-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: var(--br-full);
+}
+
+.gh-key {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: var(--fs-xs);
+}
+
+.gh-label {
+  color: rgba(255,255,255,0.55);
+  font-size: var(--fs-xs);
+}
+
+/* ── Combo / message popups ── */
+.combo-popup {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(20px, 6vw, 32px);
+  color: var(--gold);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  animation: comboAnim 1.2s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes comboAnim {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.8); }
+  20%  { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1.1); }
+  80%  { opacity: 1; transform: translateX(-50%) translateY(-10px) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.9); }
+}

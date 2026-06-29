@@ -1,0 +1,135 @@
+/* ============================================
+   OVERLAYS CSS - Pause, Game Over panels
+   OggyRunner - css/overlays.css
+   ============================================ */
+
+.ovl-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── Panel ── */
+.ovl-panel {
+  background: var(--ui-dark);
+  border-radius: var(--br-xl);
+  padding: 30px 24px;
+  width: min(88vw, 360px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--ui-border);
+  box-shadow: var(--shadow-lg);
+  animation: panelIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes panelIn {
+  from { transform: scale(0.75) translateY(24px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+/* ── Title ── */
+.ovl-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(22px, 6vw, 30px);
+  color: #fff;
+  text-align: center;
+}
+
+.ovl-score {
+  color: rgba(255,255,255,0.45);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+/* ── Buttons ── */
+.ovl-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: var(--br-md);
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(15px, 3.5vw, 18px);
+  cursor: pointer;
+  transition: var(--tr-fast);
+}
+
+.ovl-btn:active { transform: scale(0.95); }
+
+.ovl-resume  { background: var(--grad-play);  color: #1a1a2e; }
+.ovl-restart { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #1a1a2e; }
+.ovl-quit    { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.5); }
+
+/* ── Game Over specific ── */
+.go-big-score {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(48px, 13vw, 72px);
+  background: linear-gradient(45deg, var(--gold), #FFA000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.go-score-label {
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: -6px;
+}
+
+.go-hs {
+  font-family: 'Fredoka One', cursive;
+  font-size: var(--fs-md);
+  color: var(--jack-green);
+  animation: hsBlink 1s ease infinite;
+}
+
+@keyframes hsBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.go-stats-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.go-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--ui-card);
+  border-radius: var(--br-sm);
+  padding: 10px 8px;
+}
+
+.go-sv {
+  font-weight: 800;
+  font-size: clamp(15px, 4vw, 20px);
+  color: #fff;
+}
+
+.go-sl {
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
+/* ── Character select screens ── */
+#charScr {
+  background: linear-gradient(180deg, #1a1a3e, #16213e);
+}
