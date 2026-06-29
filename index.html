@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,
+      user-scalable=no,viewport-fit=cover">
+<title>Oggy Runner</title>
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/overlays.css">
+</head>
+<body>
+
+<!-- ══════════ LOADING ══════════ -->
+<div id="loader">
+  <div id="loader-logo">
+    <div class="logo-text">OGGY</div>
+    <div class="logo-sub">&amp; THE COCKROACHES</div>
+    <div class="logo-tag">ENDLESS RUNNER</div>
+  </div>
+  <div class="ld-wrap">
+    <div class="ld-bar" id="ldbar"></div>
+  </div>
+  <div class="ld-msg" id="ldmsg">Loading...</div>
+</div>
+
+<!-- ══════════ GAME CANVAS ══════════ -->
+<canvas id="C"></canvas>
+
+<!-- ══════════ MAIN MENU ══════════ -->
+<div id="menuScr" class="screen active">
+  <div class="menu-bg-anim" id="menuBgAnim"></div>
+
+  <div class="menu-logo">
+    <div class="ml-oggy">OGGY</div>
+    <div class="ml-and">&amp; THE</div>
+    <div class="ml-cock">COCKROACHES</div>
+    <div class="ml-tag">⚡ ENDLESS RUNNER ⚡</div>
+  </div>
+
+  <div class="menu-btns">
+    <button class="btn btn-play" onclick="GameFlow.startRun()">
+      <span class="btn-icon">▶</span> PLAY
+    </button>
+    <button class="btn btn-chars" onclick="GameFlow.goScreen('charScr')">
+      🎭 CHARACTERS
+    </button>
+    <button class="btn btn-shop" onclick="GameFlow.goScreen('shopScr')">
+      🛒 SHOP
+    </button>
+    <button class="btn btn-mission" onclick="GameFlow.goScreen('missionScr')">
+      📋 MISSIONS
+    </button>
+    <button class="btn btn-settings" onclick="GameFlow.goScreen('settScr')">
+      ⚙️ SETTINGS
+    </button>
+  </div>
+
+  <div class="menu-footer">
+    <div class="mf-stat">🪙 <span id="menu-coins">0</span></div>
+    <div class="mf-stat">🏆 <span id="menu-hi">0</span></div>
+    <div class="mf-stat">🎮 <span id="menu-games">0</span></div>
+  </div>
+</div>
+
+<!-- ══════════ CHARACTER SELECT ══════════ -->
+<div id="charScr" class="screen">
+  <div class="screen-header">
+    <button class="hdr-back" onclick="GameFlow.goScreen('menuScr')">←</button>
+    <div class="hdr-title">SELECT CHARACTER</div>
+    <div class="hdr-coins">🪙 <span id="cs-coins">0</span></div>
+  </div>
+
+  <div class="cs-tabs">
+    <button class="cs-tab active" id="tab-runner"
+            onclick="CharSelect.switchTab('runner',this)">
+      🏃 RUNNER
+    </button>
+    <button class="cs-tab" id="tab-chaser"
+            onclick="CharSelect.switchTab('chaser',this)">
+      😈 CHASER
+    </button>
+  </div>
+
+  <!-- Preview area with sprite -->
+  <div class="cs-preview" id="csPreview">
+    <canvas id="previewCanvas" width="160" height="200"></canvas>
+    <div class="cs-preview-info">
+      <div class="cspi-name" id="cspi-name">Oggy</div>
+      <div class="cspi-ability" id="cspi-ability">Balanced Runner</div>
+      <div class="cspi-stats" id="cspi-stats"></div>
+    </div>
+  </div>
+
+  <div class="cs-grid" id="csGrid"></div>
+
+  <div class="cs-action-bar">
+    <button class="btn-action" id="csActionBtn"
+            onclick="CharSelect.confirm()">✓ SELECT</button>
+  </div>
+</div>
+
+<!-- ══════════ SHOP ══════════ -->
+<div id="shopScr" class="screen">
+  <div class="screen-header">
+    <button class="hdr-back" onclick="GameFlow.goScreen('menuScr')">←</button>
+    <div class="hdr-title">SHOP</div>
+    <div class="hdr-coins">🪙 <span id="shop-coins">0</span></div>
+  </div>
+  <div class="cs-tabs">
+    <button class="cs-tab active"
+            onclick="ShopUI.switchTab('powerups',this)">⚡ Power-Ups</button>
+    <button class="cs-tab"
+            onclick="ShopUI.switchTab('themes',this)">🎨 Themes</button>
+    <button class="cs-tab"
+            onclick="ShopUI.switchTab('boosts',this)">🚀 Boosts</button>
+  </div>
+  <div class="cs-grid" id="shopGrid" style="padding-top:8px"></div>
+</div>
+
+<!-- ══════════ MISSIONS ══════════ -->
+<div id="missionScr" class="screen">
+  <div class="screen-header">
+    <button class="hdr-back" onclick="GameFlow.goScreen('menuScr')">←</button>
+    <div class="hdr-title">MISSIONS</div>
+    <div class="hdr-coins">🪙 <span id="mission-coins">0</span></div>
+  </div>
+  <div class="mission-list" id="missionList"></div>
+</div>
+
+<!-- ══════════ SETTINGS ══════════ -->
+<div id="settScr" class="screen">
+  <div class="screen-header">
+    <button class="hdr-back" onclick="GameFlow.goScreen('menuScr')">←</button>
+    <div class="hdr-title">SETTINGS</div>
+    <div style="width:40px"></div>
+  </div>
+  <div class="sett-list" id="settList"></div>
+</div>
+
+<!-- ══════════ HUD ══════════ -->
+<div id="hud" class="hud-hidden">
+  <div class="hud-top">
+    <div class="hud-left">
+      <div class="hud-score" id="hudScore">0</div>
+      <div class="hud-coins-display">🪙 <span id="hudCoins">0</span></div>
+    </div>
+    <div class="hud-center">
+      <div class="hud-dist" id="hudDist">0m</div>
+    </div>
+    <div class="hud-right">
+      <button class="hud-pause-btn" onclick="GameFlow.pause()">⏸</button>
+      <div class="hud-mult" id="hudMult" style="display:none">×2</div>
+      <div class="hud-pu-bar" id="hudPuBar" style="display:none">
+        <span id="hudPuIcon">🧲</span>
+        <div class="hud-pu-track">
+          <div class="hud-pu-fill" id="hudPuFill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Gesture hint shown at start -->
+  <div class="gesture-hint" id="gestureHint">
+    <div class="gh-row">
+      <div class="gh-key">↑ Swipe Up</div>
+      <div class="gh-label">Jump</div>
+    </div>
+    <div class="gh-row">
+      <div class="gh-key">↓ Swipe Down</div>
+      <div class="gh-label">Slide</div>
+    </div>
+    <div class="gh-row">
+      <div class="gh-key">← → Swipe</div>
+      <div class="gh-label">Change Lane</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PAUSE OVERLAY ══════════ -->
+<div id="pauseOvl" class="ovl-bg" style="display:none">
+  <div class="ovl-panel">
+    <div class="ovl-title">⏸ PAUSED</div>
+    <div class="ovl-score">Score: <span id="pauseScore">0</span></div>
+    <button class="ovl-btn ovl-resume" onclick="GameFlow.resume()">
+      ▶ RESUME
+    </button>
+    <button class="ovl-btn ovl-restart" onclick="GameFlow.restart()">
+      🔄 RESTART
+    </button>
+    <button class="ovl-btn ovl-quit" onclick="GameFlow.quit()">
+      🏠 MAIN MENU
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ GAME OVER OVERLAY ══════════ -->
+<div id="goOvl" class="ovl-bg" style="display:none">
+  <div class="ovl-panel">
+    <div class="ovl-title">GAME OVER</div>
+    <div class="go-big-score" id="goBigScore">0</div>
+    <div class="go-score-label">SCORE</div>
+    <div class="go-hs" id="goHs" style="display:none">🏆 NEW BEST!</div>
+    <div class="go-stats-row">
+      <div class="go-stat">
+        <div class="go-sv" id="goCoins">0</div>
+        <div class="go-sl">COINS</div>
+      </div>
+      <div class="go-stat">
+        <div class="go-sv" id="goDist">0m</div>
+        <div class="go-sl">DISTANCE</div>
+      </div>
+      <div class="go-stat">
+        <div class="go-sv" id="goTime">0s</div>
+        <div class="go-sl">TIME</div>
+      </div>
+    </div>
+    <button class="ovl-btn ovl-restart" onclick="GameFlow.restart()">
+      🔄 PLAY AGAIN
+    </button>
+    <button class="ovl-btn ovl-quit" onclick="GameFlow.quit()">
+      🏠 MENU
+    </button>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════ JS FILES (ORDER MATTERS) ══════════ -->
+<script src="js/save.js"></script>
+<script src="js/data.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/particles.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/world.js"></script>
+<script src="js/player.js"></script>
+<script src="js/chaser.js"></script>
+<script src="js/collision.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+</html>
